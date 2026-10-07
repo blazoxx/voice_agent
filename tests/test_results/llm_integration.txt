@@ -1,0 +1,53 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-9.1.1, pluggy-1.6.0
+-- /mnt/c/Users/theB Work/Desktop/voice_agent/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /mnt/c/Users/theB Work/Desktop/voice_agent
+plugins: anyio-4.15.1
+collecting ... collected 1 item
+
+tests/integration/test_llm.py::test_llm_generates_response PASSED        [100%]
+
+============================== 1 passed in 7.18s ===============================
+
+
+TEST: LLM Integration Test
+==========================
+
+Test file:
+    tests/integration/test_llm.py
+
+Purpose:
+    Verify that Bloxi can communicate with the real Groq LLM through
+    the LLM provider abstraction.
+
+Why we test this:
+    The LLM is a critical external dependency of Bloxi. This test verifies
+    that configuration, authentication, model selection, provider logic,
+    request handling, and response handling work together against the
+    real service.
+
+What is tested:
+    - Environment configuration is loaded correctly.
+    - Groq API authentication works.
+    - The configured model accepts the request.
+    - Bloxi's GroqProvider sends the request correctly.
+    - A response is successfully generated.
+    - The expected response content is returned.
+
+Test type:
+    Integration test
+
+Why integration:
+    This test communicates with the real Groq API rather than using a
+    mock. It therefore verifies the interaction between Bloxi and the
+    external LLM service.
+
+Command:
+    python -m pytest tests/integration/test_llm.py -v
+
+Pytest result:
+    PASSED
+
+Execution output:
+    1 passed in 7.18s
