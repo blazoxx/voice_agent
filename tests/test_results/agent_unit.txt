@@ -1,52 +1,51 @@
-TEST: Agent Core Unit Test
-==========================
+TEST: Bloxi Agent Core Unit Tests
+================================
 
 Test file:
     tests/unit/test_agent.py
 
 Purpose:
-    Verify that Bloxi's Agent Core correctly combines the system prompt
-    and conversation messages, calls the LLM provider, and returns a
-    structured AgentResponse.
+    Verify that Bloxi's Agent Core processes user messages, sends the
+    correct conversation history to the LLM provider, and stores
+    assistant responses in session state.
 
 Why we test this:
-    The Agent Core is the central logic layer of Bloxi. Testing it
-    independently ensures that its own orchestration logic works without
-    depending on a real LLM API.
+    A conversational agent must maintain context across multiple turns.
+    These tests verify that the Agent coordinates the conversation
+    state and LLM provider correctly without relying on a real API.
 
 What is tested:
-    - System prompt is included in the LLM request.
-    - User messages are passed correctly to the LLM provider.
-    - The Agent invokes the LLM provider correctly.
-    - The generated response is returned through AgentResponse.
-    - The session ID is preserved.
-    - No tool calls are reported when no tools are used.
-
-Test isolation:
-    A FakeLLM is used instead of the real Groq provider. This makes the
-    test deterministic and ensures that failures can be attributed to
-    Agent Core logic rather than network or API issues.
+    - User messages and assistant responses are stored in conversation state.
+    - The system prompt is included in LLM requests.
+    - Previous conversation turns are included in subsequent requests.
+    - Session IDs are preserved in structured responses.
+    - Different sessions do not share conversation history.
 
 Test type:
-    Unit test
+    Unit tests
+
+Isolation:
+    FakeLLM replaces the real LLM provider. Tests run without network
+    requests or external API dependencies.
 
 Command:
     python -m pytest tests/unit/test_agent.py -v
 
-Pytest result:
-    PASSED
+Result:
+    PASSED — 3 tests
 
-Execution output:
-    1 passed in 4.62s
-
-
+Raw execution output:
+    See the recorded pytest output below.
+    
 ============================= test session starts ==============================
 platform linux -- Python 3.12.3, pytest-9.1.1, pluggy-1.6.0 -- /mnt/c/Users/theB Work/Desktop/voice_agent/.venv/bin/python
 cachedir: .pytest_cache
 rootdir: /mnt/c/Users/theB Work/Desktop/voice_agent
 plugins: anyio-4.15.1
-collecting ... collected 1 item
+collecting ... collected 3 items
 
-tests/unit/test_agent.py::test_agent_generates_response PASSED           [100%]
+tests/unit/test_agent.py::test_agent_stores_user_and_assistant_messages PASSED [ 33%]
+tests/unit/test_agent.py::test_agent_sends_system_prompt_and_conversation_history PASSED [ 66%]
+tests/unit/test_agent.py::test_agent_keeps_sessions_isolated PASSED      [100%]
 
-============================== 1 passed in 4.62s ===============================
+============================== 3 passed in 4.39s ===============================
