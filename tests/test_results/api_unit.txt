@@ -1,0 +1,64 @@
+TEST: Bloxi FastAPI Unit Tests
+================================
+
+Test file:
+    tests/unit/test_api.py
+
+Purpose:
+    Verify that Bloxi exposes a functioning HTTP API for health checks
+    and chat requests.
+
+Why we test this:
+    The API is the entry point for clients interacting with Bloxi.
+    Request validation, session handling, structured responses, and
+    safe error handling must work independently of the real LLM.
+
+What is tested:
+    - Health endpoint returns HTTP 200.
+    - Chat endpoint returns a structured AgentResponse.
+    - Missing session IDs are generated automatically.
+    - Whitespace-only messages are rejected.
+    - Agent failures return a controlled HTTP 502 response without
+      exposing internal exception details.
+
+Test type:
+    Unit tests (API behavior tested with FastAPI TestClient)
+
+Isolation:
+    The Agent method is replaced with controlled test functions.
+    These tests do not call the real Groq API.
+
+Command:
+    python -m pytest tests/unit/test_api.py -v
+
+Result:
+    PASSED — 5 tests
+
+Warnings:
+    One StarletteDeprecationWarning concerning the httpx test-client
+    integration. Tests pass, but dependency compatibility should be
+    reviewed separately.
+
+Raw execution output:
+    Capture the actual output from the test run.
+
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-9.1.1, pluggy-1.6.0 -- /mnt/c/Users/theB Work/Desktop/voice_agent/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /mnt/c/Users/theB Work/Desktop/voice_agent
+plugins: anyio-4.15.1
+collecting ... collected 5 items
+
+tests/unit/test_api.py::test_health_endpoint PASSED                      [ 20%]
+tests/unit/test_api.py::test_chat_endpoint_returns_agent_response PASSED [ 40%]
+tests/unit/test_api.py::test_chat_endpoint_generates_session_id PASSED   [ 60%]
+tests/unit/test_api.py::test_chat_endpoint_rejects_whitespace_message PASSED [ 80%]
+tests/unit/test_api.py::test_chat_endpoint_handles_agent_failure PASSED  [100%]
+
+=============================== warnings summary ===============================
+.venv/lib/python3.12/site-packages/fastapi/testclient.py:1
+  /mnt/c/Users/theB Work/Desktop/voice_agent/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+========================= 5 passed, 1 warning in 4.84s =========================
