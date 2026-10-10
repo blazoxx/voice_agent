@@ -1,0 +1,52 @@
+TEST: Bloxi Tool Registry Unit Tests
+====================================
+
+Test file:
+    tests/unit/test_tools.py
+
+Purpose:
+    Verify that Bloxi can register tools, expose their definitions,
+    and execute registered handlers by name.
+
+Why we test this:
+    Bloxi's tool-calling architecture must be modular. The Agent should
+    be able to use different capabilities without embedding tool-specific
+    logic directly into the Agent Core.
+
+What is tested:
+    - Tools can be registered and executed.
+    - Registered tool definitions can be retrieved.
+    - Duplicate tool registrations are rejected.
+    - Unknown tool execution is rejected.
+    - Arguments are forwarded correctly to handlers.
+
+Test type:
+    Unit tests
+
+Isolation:
+    Uses simple Python functions as tool handlers. No LLM API, network,
+    or external service is required.
+
+Command:
+    python -m pytest tests/unit/test_tools.py -v
+
+Result:
+    PASSED — 5 tests
+
+Raw execution output:
+    Append the actual pytest output below.
+
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-9.1.1, pluggy-1.6.0 -- /mnt/c/Users/theB Work/Desktop/voice_agent/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /mnt/c/Users/theB Work/Desktop/voice_agent
+plugins: anyio-4.15.1
+collecting ... collected 5 items
+
+tests/unit/test_tools.py::test_register_and_execute_tool PASSED          [ 20%]
+tests/unit/test_tools.py::test_registered_tool_definition_is_available PASSED [ 40%]
+tests/unit/test_tools.py::test_duplicate_tool_registration_is_rejected PASSED [ 60%]
+tests/unit/test_tools.py::test_unknown_tool_execution_is_rejected PASSED [ 80%]
+tests/unit/test_tools.py::test_tool_arguments_are_forwarded_to_handler PASSED [100%]
+
+============================== 5 passed in 1.89s ===============================
