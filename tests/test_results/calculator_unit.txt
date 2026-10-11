@@ -1,0 +1,61 @@
+TEST: Bloxi Calculator Unit Tests
+=================================
+
+Test file:
+    tests/unit/test_calculator.py
+
+Purpose:
+    Verify that Bloxi's calculator safely evaluates supported arithmetic
+    expressions and rejects invalid or unsafe inputs.
+
+Why we test this:
+    AI-generated tool arguments must be treated as untrusted input.
+    The calculator must perform only explicitly supported arithmetic
+    operations without executing arbitrary Python code.
+
+What is tested:
+    - Addition, subtraction, multiplication, and division.
+    - Exponentiation, unary operators, and expression precedence.
+    - Empty and malformed expressions.
+    - Division by zero.
+    - Rejection of Python imports and code execution attempts.
+    - Limits on exponent size and numeric input types.
+
+Test type:
+    Unit tests
+
+Isolation:
+    Tests run locally without an LLM API, network, or external service.
+
+Command:
+    python -m pytest tests/unit/test_calculator.py -v
+
+Result:
+    PASSED — 13 tests
+
+Raw execution output:
+    Capture the actual pytest output below.
+
+    
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-9.1.1, pluggy-1.6.0 -- /mnt/c/Users/theB Work/Desktop/voice_agent/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /mnt/c/Users/theB Work/Desktop/voice_agent
+plugins: anyio-4.15.1
+collecting ... collected 13 items
+
+tests/unit/test_calculator.py::test_calculate_valid_expressions[2 + 3-5] PASSED [  7%]
+tests/unit/test_calculator.py::test_calculate_valid_expressions[10 - 4-6] PASSED [ 15%]
+tests/unit/test_calculator.py::test_calculate_valid_expressions[6 * 7-42] PASSED [ 23%]
+tests/unit/test_calculator.py::test_calculate_valid_expressions[20 / 4-5] PASSED [ 30%]
+tests/unit/test_calculator.py::test_calculate_valid_expressions[2 ** 3-8] PASSED [ 38%]
+tests/unit/test_calculator.py::test_calculate_valid_expressions[(2 + 3) * 4-20] PASSED [ 46%]
+tests/unit/test_calculator.py::test_calculate_valid_expressions[-5 + 2--3] PASSED [ 53%]
+tests/unit/test_calculator.py::test_calculate_rejects_invalid_or_unsafe_expressions[] PASSED [ 61%]
+tests/unit/test_calculator.py::test_calculate_rejects_invalid_or_unsafe_expressions[1 / 0] PASSED [ 69%]
+tests/unit/test_calculator.py::test_calculate_rejects_invalid_or_unsafe_expressions[import os] PASSED [ 76%]
+tests/unit/test_calculator.py::test_calculate_rejects_invalid_or_unsafe_expressions[__import__('os').system('whoami')] PASSED [ 84%]
+tests/unit/test_calculator.py::test_calculate_rejects_invalid_or_unsafe_expressions[2 ** 1000] PASSED [ 92%]
+tests/unit/test_calculator.py::test_calculate_rejects_invalid_or_unsafe_expressions[True + 1] PASSED [100%]
+
+============================== 13 passed in 0.49s ==============================
