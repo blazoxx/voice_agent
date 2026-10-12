@@ -1,0 +1,52 @@
+TEST: Bloxi Calculator Tool Integration with Registry
+====================================================
+
+Test file:
+    tests/unit/test_calculator_tool.py
+
+Purpose:
+    Verify that the calculator can be registered with Bloxi's ToolRegistry
+    and executed through the common tool interface.
+
+Why we test this:
+    Individual tools should be usable through a shared registry rather
+    than requiring the Agent Core to know each tool's implementation.
+    This allows Bloxi to add capabilities without embedding tool-specific
+    logic into the Agent.
+
+What is tested:
+    - Calculator registration and tool-definition discovery.
+    - Execution of arithmetic expressions through the registry.
+    - Rejection of unsafe expressions.
+    - Rejection of unexpected arguments.
+
+Test type:
+    Unit tests
+
+Isolation:
+    Uses the local calculator implementation and ToolRegistry.
+    No LLM API or network connection is required.
+
+Command:
+    python -m pytest tests/unit/test_calculator_tool.py -v
+
+Result:
+    PASSED — 4 tests
+
+Raw execution output:
+    Append the actual pytest output below.
+
+    
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-9.1.1, pluggy-1.6.0 -- /mnt/c/Users/theB Work/Desktop/voice_agent/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /mnt/c/Users/theB Work/Desktop/voice_agent
+plugins: anyio-4.15.1
+collecting ... collected 4 items
+
+tests/unit/test_calculator_tool.py::test_calculator_registers_with_registry PASSED [ 25%]
+tests/unit/test_calculator_tool.py::test_registered_calculator_executes_expression PASSED [ 50%]
+tests/unit/test_calculator_tool.py::test_registered_calculator_rejects_unsafe_expression PASSED [ 75%]
+tests/unit/test_calculator_tool.py::test_registered_calculator_rejects_unknown_arguments PASSED [100%]
+
+============================== 4 passed in 2.40s ===============================
